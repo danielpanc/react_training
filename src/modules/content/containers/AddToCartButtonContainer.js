@@ -19,7 +19,7 @@ class AddToCartButtonContainer extends Component{
   render(){
     return(
       <div>
-        <AddToCartButton onClick={this.addToCart}/>
+        <AddToCartButton onClick={this.addToCart} />
       </div>
     )
   }

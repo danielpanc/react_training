@@ -26,6 +26,7 @@ class ContentContainer extends Component {
     this.getPrdById = this.getPrdById.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.removeFromCart = this.removeFromCart.bind(this);
+    this.calcCartValue = this.calcCartValue.bind(this);
 
     this.state = {
       products: [],
@@ -72,25 +73,28 @@ class ContentContainer extends Component {
     const product = this.getPrdById(id);
     const newProduct = Object.assign({}, product);
     const products =this.state.cart.concat(newProduct);
-    let sum = 0;
-    products.forEach((item) => {sum += parseInt(item.price)});
-    this.setState({cart: products, cartValue: sum});
+    this.calcCartValue(products);
+    this.setState({cart: products});
   }
 
   removeFromCart(id){
     const products = this.state.cart.filter((v) => {return v.id !== parseInt(id)});
-    let sum = 0;
-    products.forEach((item) => {sum += parseInt(item.price)});
-    this.setState({cart: products, cartValue: sum});
+    this.calcCartValue(products);
+    this.setState({cart: products});
   }
 
+  calcCartValue(products){
+    let sum = 0;
+    products.forEach((item) => {sum += parseInt(item.price)});
+    this.setState({cartValue: sum})
+  }
 
   render() {
     const {
       product,
       cart,
     }  = this.state;
-    const cartValue = cart.forEach((item) => {sum += parseInt(item.price)});
+
     return (
       <div>
         <Match exactly pattern={`/myCart`} render={
